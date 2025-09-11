@@ -26,7 +26,33 @@ namespace ConsoleApp1
                 this .tipo = tipo;
                 this.preço = preço;
             }
+
+            public override string ToString()
+            {
+                return"hhhhhh"
+                    
         }
+
+            public struct venda
+            {
+                public string nome;
+                public int quantidade;
+                public float preço;
+                public string data;
+
+                public venda (string nome, int quantidade, float preço, string data)
+                {
+                    this.nome = nome;
+                    this.quantidade = quantidade;
+                    this.preço = preço;
+                    this.data = data;
+                }
+                public override string ToString()
+                {
+                    return " hhhh"
+          
+                }
+            }
         static void Main(string[] args)
         {
         }
