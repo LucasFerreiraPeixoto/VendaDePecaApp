@@ -18,43 +18,39 @@ namespace ConsoleApp1
             public int quant;
             public string tipo;
             public float preço;
+            public int id;
 
-            public peça(string nome, int quantidade, string tipo, float preço)
+            public peça(string nome, int quantidade, string tipo, float preço, int id)
             {
                 this.nome = nome;
                 this.quant = quantidade;
-                this .tipo = tipo;
+                this.tipo = tipo;
                 this.preço = preço;
+                this.id = id;
             }
-
-            public override string ToString()
+            public override string ToString()//Sobrescrevendo o método Tostring () para que seja exibido a imressão
             {
-                return"hhhhhh"
-                    
+                return $"╔══════════════════════════════════════════════════════╗\n" +
+                       $"║ Nome: {nome,-40}                                     ║\n" +
+                       $"║ Quantidade: {quant,-33}                              ║\n" +
+                       $"║ Preço: R$ {preço,-36:N2}                             ║\n" +
+                       $"║ Tipo:{tipo,-36:N@}                                   ║\n" +
+                       $"║ Código:{id,-36:N@}                                   ║\n" +
+                       $"╚══════════════════════════════════════════════════════╝";
+            }
         }
-
-            public struct venda
-            {
-                public string nome;
-                public int quantidade;
-                public float preço;
-                public string data;
-
-                public venda (string nome, int quantidade, float preço, string data)
-                {
-                    this.nome = nome;
-                    this.quantidade = quantidade;
-                    this.preço = preço;
-                    this.data = data;
-                }
-                public override string ToString()
-                {
-                    return " hhhh"
-          
-                }
-            }
-        static void Main(string[] args)
+        public struct venda
         {
+            public string nome;
+            public int quantidade;
+            public string preço;
+            public string tipo;
+            public int id;
         }
+            static void Main(string[] args)
+            {
+
+            }
     }
-}
+ }
+
