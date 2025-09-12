@@ -190,13 +190,56 @@ namespace ConsoleApp1
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("║                        ATENÇÃO: PEÇA NÃO ENCONTRADA!              ║");
+                Console.WriteLine("║                        ATENÇÃO: PEÇA NÃO ENCONTRADA!                 ║");
                 Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.WriteLine("\nPressione ENTER para voltar ao menu...");
                 Console.ReadLine();
             }
 
+        }
+
+
+        static void imprimirvendas(List<venda> listarparaimprimir, float toltalpeças)
+        {
+            int i, q;
+            Console.Clear();
+            //Caso não tenha sido executado nenhuma venda, não há o que imprimir.
+            if(listarparaimprimir.Count == 0)
+            {
+                Console.WriteLine("Não há vendas para imprimir");
+                Console.Readline();
+            }
+            //Caso uma ou mais vendas tenham sido realizadas, peças serão impressas ao usuário.
+            else
+            {
+                Console.WriteLine("=======================================================:");
+                Console.WriteLine("Relação da venda efetivada:");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║             RELATÓRIO DE TODAS VENDAS EFETIVADAS NO SISTEMA                  ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
+                Console.ResetColor();
+                q = listaparaimprimir.Count;
+                for (i = 0; i < q; i++)
+                {
+                    Console.WriteLine(listarparaimprimir[i]);
+                }
+
+                //Faz a soma de todas as peças
+
+                Console.WriteLine("=======================================================:");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine(" ║                            RELATÓRIO DA VENDA ATUAL                          ║");
+                Console.WriteLine(" ╠══════════════════════════════════════════════════════════════════════════════╣");
+                Console.WriteLine($"║  TOTAL VENDA DE PEÇAS: R$ {toltalpeças,-40:N2}                               ║");
+                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
+                Console.ResetColor();
+                Console.WriteLine("\nPressione ENTER para continuar...");
+                Console.ReadLine();
+            }
         }
             static void Main(string[] args)
             {
