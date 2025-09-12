@@ -247,13 +247,13 @@ namespace ConsoleApp1
             string nome, tipo, nomeconsulta;
             int i, quantidade, imprimir, escolha, escolheroperaçao;
             float preço, valorvendapeça, totalvendapeça;
-            char op;
+            char operaçao;
             DateTime agora;
 
             valorvendapeça = 0;
             totalvendapeça = 0;
 
-            peça peçaautomotiva = new peça();
+            peça peçasAutomotivas = new peça();
             venda vendas = new venda();
 
             //Cria listas para armazenar a peça cadastrada e a venda
