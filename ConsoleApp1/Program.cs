@@ -200,7 +200,7 @@ namespace ConsoleApp1
         }
 
 
-        static void imprimirvendas(List<venda> listarparaimprimir, float toltalpeças)
+        static void imprimirvendas(List<venda> listarparaimprimir, float totalpeças)
         {
             int i, q;
             Console.Clear();
@@ -208,7 +208,7 @@ namespace ConsoleApp1
             if(listarparaimprimir.Count == 0)
             {
                 Console.WriteLine("Não há vendas para imprimir");
-                Console.Readline();
+                Console.ReadLine();
             }
             //Caso uma ou mais vendas tenham sido realizadas, peças serão impressas ao usuário.
             else
@@ -221,7 +221,7 @@ namespace ConsoleApp1
                 Console.WriteLine(" ║             RELATÓRIO DE TODAS VENDAS EFETIVADAS NO SISTEMA                  ║");
                 Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
-                q = listaparaimprimir.Count;
+                q = listarparaimprimir.Count;
                 for (i = 0; i < q; i++)
                 {
                     Console.WriteLine(listarparaimprimir[i]);
@@ -234,7 +234,7 @@ namespace ConsoleApp1
                 Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine(" ║                            RELATÓRIO DA VENDA ATUAL                          ║");
                 Console.WriteLine(" ╠══════════════════════════════════════════════════════════════════════════════╣");
-                Console.WriteLine($"║  TOTAL VENDA DE PEÇAS: R$ {toltalpeças,-40:N2}                               ║");
+                Console.WriteLine($"║  TOTAL VENDA DE PEÇAS: R$ {totalpeças,-40:N2}                                ║");
                 Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.WriteLine("\nPressione ENTER para continuar...");
@@ -243,6 +243,35 @@ namespace ConsoleApp1
         }
             static void Main(string[] args)
             {
+            string nome, tipo, nomeconsulta;
+            int i, quantidade, imprimir, escolha, escolheroperaçao;
+            float preço, valorvendapeça, totalvendapeça;
+            char op;
+            DateTime agora;
+
+            valorvendapeça = 0;
+            totalvendapeça = 0;
+
+            peça peçaautomotiva = new peça();
+            venda vendas = new venda();
+
+            List<peça> listadepeças = new List<peça>();
+            List<venda> listadevendas = new List<venda>();
+
+            if (!File.Exists(arquivopeças))
+            {
+                File.Create(arquivopeças).Close();
+                Console.WriteLine("Arquivo de peças criado, pois não existia.");
+            }
+            if (!File.Exists(arquivovendas))
+            {
+                File.Create(arquivovendas).Close();
+                Console.WriteLine("Arquivo de vendas criado, pois não existia.");
+
+            }
+
+
+
 
             }
     }
