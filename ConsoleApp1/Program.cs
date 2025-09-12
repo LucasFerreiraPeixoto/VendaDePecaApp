@@ -243,6 +243,7 @@ namespace ConsoleApp1
         }
             static void Main(string[] args)
             {
+
             string nome, tipo, nomeconsulta;
             int i, quantidade, imprimir, escolha, escolheroperaçao;
             float preço, valorvendapeça, totalvendapeça;
@@ -255,14 +256,20 @@ namespace ConsoleApp1
             peça peçaautomotiva = new peça();
             venda vendas = new venda();
 
+            //Cria listas para armazenar a peça cadastrada e a venda
+
             List<peça> listadepeças = new List<peça>();
             List<venda> listadevendas = new List<venda>();
+
+            //Verifica se o arquivo de peças existe, cria caso não exista.
 
             if (!File.Exists(arquivopeças))
             {
                 File.Create(arquivopeças).Close();
                 Console.WriteLine("Arquivo de peças criado, pois não existia.");
             }
+
+            //Verifica se o arquivo de vendas existe, cria caso não exista
             if (!File.Exists(arquivovendas))
             {
                 File.Create(arquivovendas).Close();
