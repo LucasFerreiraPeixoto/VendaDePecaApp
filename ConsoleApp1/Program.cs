@@ -276,11 +276,103 @@ namespace ConsoleApp1
                 Console.WriteLine("Arquivo de vendas criado, pois não existia.");
 
             }
+             // Irá ocorrer a leitura dos arquivos
+
+            var carregarpeças = File.ReadAllLines(arquivopeças);
+            Console.WriteLine("Estoque de peças carregando:");
+            var cargadevendas = File.ReadAllLines(arquivovendas);
+
+            listadepeças = carregarpeças.Select(line => {
+            var parts = line.Split(';');
+                return new peça(parts[0], int.Parse(parts[1]), parts[2], float.Parse(parts[3]), int.Parse(parts[4]));
+            }).ToList();
+            listadevendas = cargadevendas.Select(line => {
+                var parts = line.Split(';');
+                return new venda(parts[0], int.Parse(parts[1]), parts[2], float.Parse(parts[3]), int.Parse(parts[4]));
+            }).ToList();
+
+            Console.WriteLine("Registro de vendas carregado:");
+            Console.WriteLine("==================================================================");
+            Console.WriteLine("  REGISTROS CARREGADOS COM SUCESSO NO SISTEMA !");
+            Console.WriteLine("==================================================================");
+            Console.ResetColor();
+            Console.WriteLine("\nPressione ENTER para iniciar o MENU...");
+            Console.ReadLine();
+            Console.Clear();
+
+
+            do
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("=================================================================================");
+                Console.WriteLine("        SISTEMA DE GESTÃO DE ESTOQUE E VENDAS - PEÇAS AUTOMOTIVAS ");
+                Console.WriteLine("=================================================================================");
+                Console.ResetColor();
+                Console.WriteLine();
+
+                // Menu do sistema
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("║                               MENU PRINCIPAL                                        ║");
+                Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════╣");
+                Console.WriteLine("║  [1] Cadastrar Peça                                                                 ║");
+                Console.WriteLine("║  [2] Realizar Venda                                                                 ║");
+                Console.WriteLine("║  [3] Imprimir cadastrados                                                           ║");
+                Console.WriteLine("║  [4] Consultar ou EXCLUIR peça no estoque                                           ║");
+                Console.WriteLine("║  [5] Sair                                                                           ║");
+                Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════╝");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.Write("Escolha a operação desejada:");
+
+                // O Usuário irá escolher a opção que deseja realizar
+
+                escolheroperaçao = int.Parse(Console.ReadLine());
+                switch (escolheroperaçao)
+                {
+                    case 1:
+                        {
+                            break;
+
+                        }
+
+
+                    case 2:
+                        {
+                            break;
+                     
+                        }
+
+
+                    case 3:
+                        {
+                            break;
+
+                        }
+
+
+                    case 4:
+                        {
+                            break;
+
+                        }
 
 
 
 
-            }
+
+                }
+
+
+
+
+            } while (escolheroperaçao !=5 );
+
+
+
+        }
     }
  }
 
