@@ -7,11 +7,19 @@ namespace ConsoleApp1
 {
     internal class Program
     {
-        //Váriavel para receber conteúdos em arquivos
+                                           //============================ CAMADA DE PERSISTÊNCIA (Arquivos)============================
+
+        //Inclui todas as entradas e saídas nos arquivos registroVendas e registroPecas
+
+        // Váriavel para receber conteúdos em arquivos
         static string arquivopeças = @"C:\Users\USER\OneDrive\Desktop\faculdade C#\Projeto Venda de Peças\CodigoProgramaDeVendas\registroPecas.txt";
         static string arquivovendas = @"C:\Users\USER\OneDrive\Desktop\faculdade C#\Projeto Venda de Peças\CodigoProgramaDeVendas\registroVendas.txt";
 
-        //Criação da struct para as Peças que serão cadastradas e vendidas no sistema
+                                            //============================ CAMADA DE DADOS (Modelo e Estruturas)============================
+
+        //Define as estruturas das entidades.
+
+        // Criação da struct para as Peças que serão cadastradas e vendidas no sistema
         public struct peça
         {
             public string nome, tipo;
@@ -62,6 +70,11 @@ namespace ConsoleApp1
                         " ╚═════════════════════════════════════════════════════════════════════════════════=══╝";
             }
         }
+
+                                          //============================ CAMADA DE LÓGICA DE NEGÓCIO ============================
+
+        //Regras de negócio, processar cálculos e operações principais
+
         //Cria a Função para imprimir a relação de todas as peças cadastradas no sistema;
         static void imprimir(List<peça> listaparaimpressao)
         {
@@ -97,6 +110,10 @@ namespace ConsoleApp1
                 Console.WriteLine("================================================================================");
             }
         }
+
+                //============================ CAMADA DE INTERFACE COM O USUÁRIO ============================
+
+        //Responsável pela interação e exibição de menus, ler entradas e mostrar resultados ao usuário pelo console.
 
         //Cria a Função de Consulta/Exclusão de todas as peças;
         static void consultar(List<peça> consultarpeças, string encontrarNome)
@@ -309,7 +326,7 @@ namespace ConsoleApp1
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("╔═════════════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("║                               MENU PRINCIPAL                                        ║");
+                Console.WriteLine("║                                   MENU PRINCIPAL                                    ║");
                 Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════╣");
                 Console.WriteLine("║  [1] Cadastrar Peça                                                                 ║");
                 Console.WriteLine("║  [2] Realizar Venda                                                                 ║");
@@ -445,7 +462,7 @@ namespace ConsoleApp1
                                                 Console.Clear();
                                                 Console.ForegroundColor = ConsoleColor.Red;
                                                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
-                                                Console.WriteLine("║                        ATENÇÃO: NENHUM PRODUTO ENCONTRADO!           ║");
+                                                Console.WriteLine("║                   ATENÇÃO: NENHUM PRODUTO ENCONTRADO!                ║");
                                                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
                                                 Console.WriteLine("║  Não há produtos cadastrados no estoque para essa busca no momento.  ║");
                                                 Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
