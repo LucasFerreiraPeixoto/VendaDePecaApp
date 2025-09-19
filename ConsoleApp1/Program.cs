@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 
@@ -25,6 +26,7 @@ namespace ConsoleApp1
             public string nome, tipo;
             public int quant, id;
             public float preço;
+           
 
             public peça(string nome, int quantidade, string tipo, float preço, int id)
             {
@@ -52,14 +54,18 @@ namespace ConsoleApp1
             public string nome, tipo;
             public int quant, id;
             public float preço;
+            public string data;
 
-            public venda(string nome, int quantidade, string tipo, float preço, int id)
+
+            public venda(string nome, int quantidade, string tipo, float preço, int id, string data)
             {
                 this.nome = nome;
                 this.quant = quantidade;
                 this.tipo = tipo;
                 this.preço = preço;
                 this.id = id;
+                this.data = data;
+
             }
             public override string ToString()//Sobrescrevendo o método Tostring () para que seja exibido a impressão da caixa abaixo ao efetuar uma venda;
             {
@@ -330,7 +336,7 @@ namespace ConsoleApp1
                 Console.WriteLine("╠═════════════════════════════════════════════════════════════════════════════════════╣");
                 Console.WriteLine("║  [1] Cadastrar Peça                                                                 ║");
                 Console.WriteLine("║  [2] Realizar Venda                                                                 ║");
-                Console.WriteLine("║  [3] Imprimir cadastrados                                                           ║");
+                Console.WriteLine("║  [3] Imprimir peças cadastradas                                                     ║");
                 Console.WriteLine("║  [4] Consultar ou EXCLUIR peça no estoque                                           ║");
                 Console.WriteLine("║  [5] Sair                                                                           ║");
                 Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════════════════╝");
@@ -354,7 +360,7 @@ namespace ConsoleApp1
                                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
                                 Console.WriteLine("║  [1] Peças automotivas                                               ║");
                                 Console.WriteLine("║                                                                      ║");
-                                Console.WriteLine("║  [99] Imprimir cadastrados                                           ║");
+                                Console.WriteLine("║  [99] Imprimir peças cadastradas                                     ║");
                                 Console.WriteLine("║                                                                      ║");
                                 Console.WriteLine("║  [00] Consultar ou EXCLUIR peças no estoque                          ║");
                                 Console.WriteLine("║                                                                      ║");
@@ -427,7 +433,7 @@ namespace ConsoleApp1
                                             Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
                                             Console.WriteLine("║        CONSULTA DE PRODUTOS - ESCOLHA UMA OPÇÃO                      ║");
                                             Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
-                                            Console.WriteLine("║  [1] Peças Automotivas                                              ║");
+                                            Console.WriteLine("║  [1] Peças Automotivas                                               ║");
                                             Console.WriteLine("║  [-1] Voltar                                                         ║");
                                             Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
                                             Console.ResetColor();
@@ -495,6 +501,7 @@ namespace ConsoleApp1
                                         else { break; }
                                 }
                             } while (escolha != -1);
+
                             break;
 
                         }
@@ -502,25 +509,287 @@ namespace ConsoleApp1
 
                     case 2:
                         {
-                            break;
+                            do
+                            {
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════════╗");
+                                Console.WriteLine("║                        MENU DE VENDAS - ESCOLHA UMA OPÇÃO                    ║");
+                                Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════════╣");
+                                Console.WriteLine("║  [1] Peças Automotivas                                                       ║");
+                                Console.WriteLine("║  [99] Imprimir estoque                                                       ║");
+                                Console.WriteLine("║  [00] Consultar peça no estoque                                              ║");
+                                Console.WriteLine("║  [1000] Imprimir relatório da venda ATUAL e valor total a pagar              ║");
+                                Console.WriteLine("║  [-1] Voltar                                                                 ║");
+                                Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════════╝");
+                                Console.ResetColor();
+                                Console.Write("\nDigite o número da opção desejada: ");
 
+                                escolha = int.Parse(Console.ReadLine());
+
+                                switch (escolha)
+                                {
+                                    case 1:
+                                        {
+
+                                            if(listadepeças.Count == 0)
+                                            {
+                                                Console.WriteLine("Não há peças no estoque!");
+                                                Console.ReadLine();
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Nome da peça a ser vendida:");
+                                                nome = Console.ReadLine();
+                                                Console.WriteLine("Digite a quatidade vendida:");
+                                                quantidade = int.Parse(Console.ReadLine());
+
+                                                bool produtoEncontrado = false;
+                                                for (i = 0; i < listadepeças.Count; i++)
+                                                {
+                                                    if (listadepeças[i].nome == nome)
+                                                    {
+                                                        produtoEncontrado = true;
+                                                        if (listadepeças[i].quant <= 0)
+                                                        {
+                                                            Console.WriteLine("Peça esgotada!!!");
+                                                            Console.WriteLine("ATENÇÃO: Solicitar peça ao fornecedor");
+                                                        }
+                                                        else
+                                                        {
+                                                            if (listadepeças[i].quant < quantidade)
+                                                            {
+                                                                Console.WriteLine($"\nNão há peças suficientes no estoque = {listadepeças[i].quant}");
+                                                            }
+                                                            else
+                                                            {
+                                                                peçasAutomotivas = listadepeças[i];
+                                                                peçasAutomotivas.quant = listadepeças[i].quant - quantidade;
+                                                                listadepeças[i] = peçasAutomotivas;
+                                                                vendas.quant = quantidade;
+
+                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+                                                                Console.WriteLine(" ║                                             VENDA DE PEÇAS CONCLUÍDA                                             ║");
+                                                                Console.WriteLine(" ╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
+                                                                Console.WriteLine($"║  Venda de {quantidade} unidade(s) do produto \"{nome}\" realizada com sucesso!{new string(' ', 18 - nome.Length)}║");
+                                                                Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+                                                                Console.ResetColor();
+
+                                                                valorvendapeça = listadepeças[i].preço * quantidade;
+                                                                agora = DateTime.Now;
+                                                                vendas.data agora.ToString("yyyy-MM-dd HH:mm:ss");
+                                                                vendas = new venda(peçasAutomotivas.nome, vendas.id = "#0000", vendas.quant, peçasAutomotivas.preço, vendas.data);
+                                                                listadepeças.Add(vendas);
+                                                                totalvendapeça = totalvendapeça + valorvendapeça;
+
+                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                                Console.WriteLine(" ╔═════════════════════════════════════════════════════════════════════╗");
+                                                                Console.WriteLine($"║  Valor da venda atual de peças: R$ {valorvendapeça,-48:N2}          ║");
+                                                                Console.WriteLine($"║  Valor acumulado de vendas de peças: R$ {totalvendapeça,-39:N2}     ║");
+                                                                Console.WriteLine(" ╚═════════════════════════════════════════════════════════════════════╝");
+                                                                Console.ResetColor();
+
+                                                                File.WriteAllLines(arquivopeças, listadepeças.Select(b => $"{b.nome};{b.quant};{b.preço}"));
+                                                                File.WriteAllLines(arquivovendas, listadevendas.Select(v => $"{v.nome};{v.id};{v.quant};{v.data}"));
+                                                                Console.WriteLine("Estoque salvo em " + arquivopeças);
+                                                                Console.WriteLine("Estoque salvo em " + arquivovendas);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                if (!produtoEncontrado)
+                                                {
+                                                    Console.WriteLine("Peça esgotada no estoque!");
+                                                }
+                                                Console.ReadLine();
+
+                                            }
+                                            break;
+                                        }
+
+                                    case 99:
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Magenta;
+                                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                                            Console.WriteLine("║                      IMPRESSÃO DE ESTOQUE                            ║");
+                                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                                            Console.WriteLine("║  [1] Peças Automotivas                                               ║");
+                                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                                            Console.ResetColor();
+                                            Console.WriteLine();
+
+                                            impressao = int.Parse(Console.ReadLine());
+
+                                            if (impressao == 1)
+                                            {
+                                                imprimir(listadepeças);
+                                            }
+                                            break;
+                                        }
+
+                                    case 00: {
+
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Blue;
+                                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                                            Console.WriteLine("║                           CONSULTA DE PEÇAS                          ║");
+                                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                                            Console.WriteLine("║  [1] Peças Automotivas                                               ║");
+                                            Console.WriteLine("║  [-1] Voltar                                                         ║");
+                                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                                            Console.ResetColor();
+                                            Console.Write("\nDigite o número da opção desejada: ");
+
+                                            impressao = int.Parse(Console.ReadLine());
+
+                                            if (impressao == 1)
+                                            {
+                                                if (listadepeças.Count == 0)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Não há peças no estoque para essa busca!");
+                                                    Console.ReadLine();
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Informe o nome da peça desejada:");
+                                                    nomeconsulta = Console.ReadLine();
+                                                    consultar(listadepeças, nomeconsulta);
+                                                }
+                                            }
+                                            break;
+                                        }
+
+                                    case 1000:
+                                        {
+                                            totalvendapeça = totalvendapeça;
+                                            imprimirvendas(listadevendas, totalvendapeça);
+                                            break;
+                                        }
+
+                                    default:
+                                        if (escolha != -1)
+                                        {
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                                            Console.WriteLine("║                        ATENÇÃO: OPÇÃO INVÁLIDA!                      ║");
+                                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                                            Console.WriteLine("║  A opção selecionada não é válida. Por favor, escolha novamente.     ║");
+                                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                                            Console.ResetColor();
+                                            Console.WriteLine("\nPressione ENTER para voltar ao menu...");
+                                            Console.ReadLine();
+                                            break;
+                                        }
+                                        else { break; }
+
+                                }
+
+                            }
+                            while(escolha != -1)
+
+                            break;
+                       
                         }
 
 
                     case 3:
                         {
+                            Console.Clear();
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                            Console.WriteLine("║                  IMPRESSÃO DE ESTOQUE - ESCOLHA UMA LISTA            ║");
+                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                            Console.WriteLine("║  [1] Peças Automotivas                                               ║");
+                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                            Console.ResetColor();
+
+                            impressao = int.Parse(Console.ReadLine());
+
+                            if(impressao == 1 )
+                            {
+                                imprimir(listadepeças);
+                            }
                             break;
-
                         }
-
 
                     case 4:
                         {
+
+                            Console.Clear();
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                            Console.WriteLine("║        CONSULTA/EXCLUSÃO DE PEÇAS - ESCOLHA UMA OPÇÃO                ║");
+                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                            Console.WriteLine("║  [1] Para consultar ou excluir peças                                 ║");
+                            Console.WriteLine("║  [-1] Voltar                                                         ║");
+                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                            Console.ResetColor();
+
+                            impressao = int.Parse(Console.ReadLine());
+
+                            if(impressao == 1)
+                            {
+                                if (listadepeças.Count == 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Não há peças no estoque para realizar essa busca!");
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Informe o nome da peça:");
+                                    nomeconsulta = Console.ReadLine();
+                                    consultar(listadepeças, nomeconsulta);
+                                }              
+                            } 
+                            else
+                            {
+                                Console.WriteLine("Não há peças no estoque para realizar essa busca!");
+                            }
                             break;
 
                         }
+                    default:
+                        if(escolheroperaçao != )
+                        {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                            Console.WriteLine("║                        ATENÇÃO: OPÇÃO INVÁLIDA!                      ║");
+                            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                            Console.WriteLine("║  A opção selecionada não é válida. Por favor, escolha novamente.     ║");
+                            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                            Console.ResetColor();
+                            Console.WriteLine("\nPressione ENTER para voltar ao menu...");
+                            Console.ReadLine();
+                            break;
+                        }
+                        else { break;  }
                 }
+
             } while (escolheroperaçao != 5);
+
+            File.WriteAllLines(arquivopeças, listadepeças.Select(b => $"{b.nome};{b.quant};{b.preço}"));
+            File.WriteAllLines(arquivovendas, listadevendas.Select(v => $"{v.nome};{v.id};{v.quant};{v.preço};{v.data}"));
+            Console.WriteLine("Estoque salvo em " + arquivopeças);
+            Console.WriteLine("Estoque salvo em " + arquivovendas);
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                     OBRIGADO POR UTILIZAR O SISTEMA!                 ║");
+            Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+            Console.WriteLine("║                    Volte sempre à Guru das Peças LTDA                ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+            Console.WriteLine("\nPressione ENTER para sair...");
+            Console.ReadLine();
         }
     }
 }
