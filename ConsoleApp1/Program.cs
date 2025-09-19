@@ -305,7 +305,7 @@ namespace ConsoleApp1
             listadevendas = cargadevendas.Select(line =>
             {
                 var parts = line.Split(';');
-                return new venda(parts[0], int.Parse(parts[1]), parts[2], float.Parse(parts[3]), int.Parse(parts[4]));
+                return new venda(parts[0], int.Parse(parts[1]), parts[2], float.Parse(parts[3]), int.Parse(parts[4]), parts[5]);
             }).ToList();
 
             Console.WriteLine("Registro de vendas carregado:");
@@ -532,7 +532,7 @@ namespace ConsoleApp1
                                     case 1:
                                         {
 
-                                            if(listadepeças.Count == 0)
+                                            if (listadepeças.Count == 0)
                                             {
                                                 Console.WriteLine("Não há peças no estoque!");
                                                 Console.ReadLine();
@@ -578,9 +578,9 @@ namespace ConsoleApp1
 
                                                                 valorvendapeça = listadepeças[i].preço * quantidade;
                                                                 agora = DateTime.Now;
-                                                                vendas.data agora.ToString("yyyy-MM-dd HH:mm:ss");
-                                                                vendas = new venda(peçasAutomotivas.nome, vendas.id = "#0000", vendas.quant, peçasAutomotivas.preço, vendas.data);
-                                                                listadepeças.Add(vendas);
+                                                                vendas.data = agora.ToString("yyyy-MM-dd HH:mm:ss");
+                                                                vendas = new venda(peçasAutomotivas.nome, vendas.quant, peçasAutomotivas.tipo, peçasAutomotivas.preço, peçasAutomotivas.id, vendas.data);
+                                                                listadevendas.Add(vendas);
                                                                 totalvendapeça = totalvendapeça + valorvendapeça;
 
                                                                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -689,7 +689,7 @@ namespace ConsoleApp1
                                 }
 
                             }
-                            while(escolha != -1)
+                            while (escolha != -1);
 
                             break;
                        
@@ -756,7 +756,7 @@ namespace ConsoleApp1
 
                         }
                     default:
-                        if(escolheroperaçao != )
+                        if(escolheroperaçao != 5 )
                         {
                             Console.Clear();
                             Console.ForegroundColor = ConsoleColor.Red;
