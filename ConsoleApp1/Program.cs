@@ -578,7 +578,7 @@ namespace ConsoleApp1
                                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════════════╗");
                                 Console.WriteLine("║                        MENU DE VENDAS - ESCOLHA UMA OPÇÃO                    ║");
                                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════════╣");
-                                Console.WriteLine("║  [1] Peças Automotivas                                                       ║");
+                                Console.WriteLine("║  [1] Realizar venda de peça                                                  ║");
                                 Console.WriteLine("║  [99] Imprimir estoque                                                       ║");
                                 Console.WriteLine("║  [00] Consultar peça no estoque                                              ║");
                                 Console.WriteLine("║  [1000] Imprimir relatório da venda ATUAL e valor total a pagar              ║");
