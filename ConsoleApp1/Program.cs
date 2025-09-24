@@ -91,7 +91,7 @@ namespace ConsoleApp1
                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine("║                 ATENÇÃO: ESTOQUE DE PEÇAS VAZIO!                     ║");
                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
-                Console.WriteLine("║  NÂO há peças cadastradas no estoque para impressão no momento.      ║");
+                Console.WriteLine("║  NÃO há peças cadastradas no estoque para impressão no momento.      ║");
                 Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.WriteLine("\nPressione ENTER para voltar ao menu...");
@@ -223,13 +223,13 @@ namespace ConsoleApp1
             if (resultado.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Nenhuma peça encontrada com ess id");
+                Console.WriteLine("Nenhuma peça encontrada com esse id");
                 Console.ResetColor();
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Peças emcontradas: ");
+                Console.WriteLine("Peças encontradas: ");
 
                 foreach (var p in resultado)
                 {
@@ -286,7 +286,7 @@ namespace ConsoleApp1
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine(" ║             RELATÓRIO DE TODAS VENDAS EFETIVADAS NO SISTEMA                  ║");
+                Console.WriteLine(" ║             RELATÓRIO DE TODAS AS VENDAS EFETIVADAS NO SISTEMA               ║");
                 Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 q = listarparaimprimir.Count;
