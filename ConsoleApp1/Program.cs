@@ -351,18 +351,18 @@ namespace ConsoleApp1
             var cargadevendas = File.ReadAllLines(arquivovendas);
 
             //Carrega as peças que estão registradas no arquvivo TXT
-            listadepeças = carregarpeças.Select(line =>
-            {
-                var parts = line.Split(';');
-                return new peça(
+            listadepeças = carregarpeças
+                .Select(line => line.Split(';'))
+                .Where(parts => parts.Length == 5)
+                .Select(parts => new peça(
                     parts[0],
                     int.Parse(parts[1]),
                     parts[2],
                     float.Parse(parts[3]),
                     int.Parse(parts[4])
-                    );
+                    ))
+                .ToList();
 
-            }).ToList();
             listadevendas = cargadevendas.Select(line =>
             {
                 var parts = line.Split(';');
@@ -661,7 +661,7 @@ namespace ConsoleApp1
                                                                 //A peça é atualizada no arquivo
 
                                                                 File.WriteAllLines(arquivopeças, listadepeças.Select(b => $"{b.nome};{b.quant};{b.tipo};{b.preço};{b.id}"));
-                                                                File.WriteAllLines(arquivovendas, listadevendas.Select(v => $"{v.nome};{v.quant};{v.tipo};{v.id};{v.data}"));
+                                                                File.WriteAllLines(arquivovendas, listadevendas.Select(v => $"{v.nome};{v.quant};{v.tipo};{v.preço};{v.id};{v.data}"));
                                                                 Console.WriteLine("Estoque salvo em " + arquivopeças);
                                                                 Console.WriteLine("Estoque salvo em " + arquivovendas);
                                                             }
