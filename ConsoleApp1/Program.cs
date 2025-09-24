@@ -68,11 +68,11 @@ namespace ConsoleApp1
             }
             public override string ToString()//Sobrescrevendo o método Tostring () para que seja exibido a impressão da caixa abaixo ao efetuar uma venda;
             {
-                return "  ╔════════════════════════════════════════════════════════════════════════════════════╗\n" +
-                        $"║ Nome: {nome,-20} Quantidade vendida: {quant,-8} Preço unitário: R$ {preço,-10:N2}  ║\n" +
-                        $"║ Tipo: {tipo,-20}                                                                   ║\n" +
-                        $"║ Id: {id,-20} Total: R$ {(quant * preço),-38:N2}                                    ║\n" +
-                        " ╚═════════════════════════════════════════════════════════════════════════════════=══╝";
+                return "  ═════════════════════════════════════════════════════════════════════════════════════════════════════════════\n" +
+                      $"  Nome: {nome,-20} Quantidade vendida: {quant,-8} Preço unitário: R$ {preço,-10:N2}                            \n" +
+                      $"  Tipo: {tipo,-20}                                                                                             \n" +
+                      $"  Id: {id,-20} Total: R$ {(quant * preço),-38:N2}                                                              \n" +
+                        " ═════════════════════════════════════════════════════════════════════════════════════════════════════════════";
             }
         }
 
@@ -131,7 +131,7 @@ namespace ConsoleApp1
 
             for (i = 0; i < consultarpeças.Count; i++)
             {
-                if (consultarpeças[i].nome == encontrarNome)
+                if (consultarpeças[i].nome.Equals(encontrarNome, StringComparison.OrdinalIgnoreCase ))
                 {
                     encontrado = true;
                     emestoque = consultarpeças[i].quant;
@@ -162,9 +162,9 @@ namespace ConsoleApp1
                     {
                         consultarpeças.RemoveAt(i);//Remove a peça que foi encontrada na lista na posição que i estiver;
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(" ╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-                        Console.WriteLine($"║  Produto \"{encontrarNome}\" excluído com sucesso!{new string(' ', 52 - encontrarNome.Length)}║");
-                        Console.WriteLine(" ╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+                        Console.WriteLine(" =═══════════════════════════════════════════════════════════════════════════════════════════════=");
+                        Console.WriteLine($"   Produto \"{encontrarNome}\" excluído com sucesso!{new string(' ', 52 - encontrarNome.Length)}");
+                        Console.WriteLine(" =═══════════════════════════════════════════════════════════════════════════════════════════════=");
                         Console.ResetColor();
 
                         File.WriteAllLines(arquivopeças, consultarpeças.Select(r => $"{r.nome};{r.tipo};{r.quant};{r.preço};{r.id}"));
@@ -205,7 +205,7 @@ namespace ConsoleApp1
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
-                Console.WriteLine("║                        ATENÇÃO: PEÇA NÃO ENCONTRADA!                 ║");
+                Console.WriteLine("║                     ATENÇÃO: PEÇA NÃO ENCONTRADA!                    ║");
                 Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.WriteLine("\nPressione ENTER para voltar ao menu...");
@@ -301,9 +301,9 @@ namespace ConsoleApp1
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine(" ║                            RELATÓRIO DA VENDA ATUAL                          ║");
-                Console.WriteLine(" ╠══════════════════════════════════════════════════════════════════════════════╣");
-                Console.WriteLine($"║  TOTAL VENDA DE PEÇAS: R$ {totalpeças,-40:N2}                                ║");
                 Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════╝");
+                Console.WriteLine($"  TOTAL VENDA DE PEÇAS: R$ {totalpeças,-40:N2}                                   ");
+                Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════");
                 Console.ResetColor();
                 Console.WriteLine("\nPressione ENTER para continuar...");
                 Console.ReadLine();
@@ -314,12 +314,13 @@ namespace ConsoleApp1
 
             string nome, nomeconsulta, tipoDePpeça;
             int i, quantidade, impressao, escolha, escolheroperaçao, codigo;
-            float preço, valorvendapeça, totalvendapeça;
+            float preço, valorvendapeça, totalvendapeça,total;
             char operaçao;
             DateTime agora;
 
             valorvendapeça = 0;
             totalvendapeça = 0;
+            total = 0;
 
             peça peçasAutomotivas = new peça();
             venda vendas = new venda();
@@ -419,7 +420,7 @@ namespace ConsoleApp1
                                 Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
                                 Console.WriteLine("║         CADASTRO DE PRODUTOS - ESCOLHA UMA OPÇÃO                     ║");
                                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
-                                Console.WriteLine("║  [1] Peças automotivas                                               ║");
+                                Console.WriteLine("║  [1] Cadastrar Peças automotivas                                     ║");
                                 Console.WriteLine("║                                                                      ║");
                                 Console.WriteLine("║  [99] Imprimir peças cadastradas                                     ║");
                                 Console.WriteLine("║                                                                      ║");
@@ -453,7 +454,16 @@ namespace ConsoleApp1
 
                                                 peçasAutomotivas = new peça(nome, quantidade, tipoDePpeça, preço, codigo);//método construtor para peçasAutomotiva;
                                                 listadepeças.Add(peçasAutomotivas); //Aqui a lista recebe os objetos dentro de peçasAutomotivas em sequencia;
-                                                Console.WriteLine("Deseja cadastar mais uma peça?");
+                                            
+                                                Console.Clear();
+                                                Console.Clear();
+                                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                                Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
+                                                Console.WriteLine("║                    DESEJA CADASTRAR MAIS UMA PEÇA ?                  ║");
+                                                Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
+                                                Console.WriteLine("║                  DIGITE (S) PARA SIM OU (N) PARA NÃO :               ║");
+                                                Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
+                                                Console.ResetColor();
 
                                                 File.WriteAllLines(arquivopeças, listadepeças.Select(b => $"{b.nome};{b.quant};{b.tipo};{b.preço};{b.id}"));
                                                 Console.WriteLine("Estoque salvo em " + arquivopeças);
@@ -579,9 +589,13 @@ namespace ConsoleApp1
                                 Console.WriteLine("║                        MENU DE VENDAS - ESCOLHA UMA OPÇÃO                    ║");
                                 Console.WriteLine("╠══════════════════════════════════════════════════════════════════════════════╣");
                                 Console.WriteLine("║  [1] Realizar venda de peça                                                  ║");
+                                Console.WriteLine("║                                                                              ║");
                                 Console.WriteLine("║  [99] Imprimir estoque                                                       ║");
+                                Console.WriteLine("║                                                                              ║");
                                 Console.WriteLine("║  [00] Consultar peça no estoque                                              ║");
+                                Console.WriteLine("║                                                                              ║");
                                 Console.WriteLine("║  [1000] Imprimir relatório da venda ATUAL e valor total a pagar              ║");
+                                Console.WriteLine("║                                                                              ║");
                                 Console.WriteLine("║  [-1] Voltar                                                                 ║");
                                 Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════════╝");
                                 Console.ResetColor();
@@ -610,7 +624,7 @@ namespace ConsoleApp1
                                                 bool produtoEncontrado = false;
                                                 for (i = 0; i < listadepeças.Count; i++)
                                                 {
-                                                    if (listadepeças[i].nome == nome)
+                                                    if (listadepeças[i].nome.Equals(nome, StringComparison.OrdinalIgnoreCase))
                                                     {
                                                         produtoEncontrado = true;
                                                         if (listadepeças[i].quant <= 0)
@@ -636,9 +650,9 @@ namespace ConsoleApp1
                                                                 Console.ForegroundColor = ConsoleColor.Green;
                                                                 Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
                                                                 Console.WriteLine(" ║                                             VENDA DE PEÇAS CONCLUÍDA                                             ║");
-                                                                Console.WriteLine(" ╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣");
-                                                                Console.WriteLine($"║  Venda de {quantidade} unidade(s) do produto \"{nome}\" realizada com sucesso!{"",52}                            ║");
                                                                 Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+                                                                Console.WriteLine($"  Venda de {quantidade} unidade(s) do produto \"{nome}\" realizada com sucesso!{"",52}                              ");
+                                                                Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════");
                                                                 Console.ResetColor();
 
 
@@ -652,11 +666,11 @@ namespace ConsoleApp1
                                                                 //Informa o total da venda e o valor unitário de cada produto
                                                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                                                 Console.WriteLine(" ╔═════════════════════════════════════════════════════════════════════╗");
-                                                                Console.WriteLine($"║  Valor da venda atual de peças: R$ {valorvendapeça,-48:N2}          ║");
-                                                                Console.WriteLine($"║  Valor acumulado de vendas de peças: R$ {totalvendapeça,-39:N2}     ║");
+                                                                Console.WriteLine($"  Valor da venda atual de peças: R$ {valorvendapeça,-48:N2}           ");
+                                                                Console.WriteLine($"  Valor acumulado de vendas de peças: R$ {totalvendapeça,-39:N2}      ");
                                                                 Console.WriteLine(" ╚═════════════════════════════════════════════════════════════════════╝");
                                                                 Console.ResetColor();
-
+                                                                total = total + (valorvendapeça * quantidade);
                                                                 //A venda é regitrada no arquivo com DATA
                                                                 //A peça é atualizada no arquivo
 
@@ -741,8 +755,7 @@ namespace ConsoleApp1
                                     //Realiza o total de todas as vendas
                                     case 1000:
                                         {
-                                            totalvendapeça = totalvendapeça;
-                                            imprimirvendas(listadevendas, totalvendapeça);
+                                            imprimirvendas(listadevendas, total);
                                             break;
                                         }
 
@@ -914,9 +927,9 @@ namespace ConsoleApp1
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔══════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                     OBRIGADO POR UTILIZAR O SISTEMA!                 ║");
+            Console.WriteLine("║                   OBRIGADO POR UTILIZAR O SISTEMA!                   ║");
             Console.WriteLine("╠══════════════════════════════════════════════════════════════════════╣");
-            Console.WriteLine("║                    Volte sempre à Guru das Peças LTDA                ║");
+            Console.WriteLine("║                  Volte sempre à Guru das Peças LTDA                  ║");
             Console.WriteLine("╚══════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
             Console.WriteLine("\nPressione ENTER para sair...");
