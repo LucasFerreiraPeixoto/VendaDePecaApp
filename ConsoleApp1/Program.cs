@@ -245,7 +245,7 @@ namespace ConsoleApp1
         static void listarPorTipo(List<peça> listadepeças, string tipoBusca)
         {
             var resultado = listadepeças
-                .Where(p => p.tipo.Equals(tipoBusca, StringComparison.OrdinalIgnoreCase))
+                .Where(p => p.tipo.Equals(tipoBusca, StringComparison.OrdinalIgnoreCase)) //Equals ignora se o usuário insere em caixa alta ou baixa
                 .ToList();
 
             Console.Clear();
